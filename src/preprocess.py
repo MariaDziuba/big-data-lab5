@@ -1,4 +1,6 @@
 from pyspark.ml.feature import VectorAssembler, StandardScaler
+import loguru
+
 
 class Preprocessor:
 
@@ -10,6 +12,7 @@ class Preprocessor:
             sep='\t',
         )
         dataset.fillna(value=0)
+        loguru.logger.info("Filled all NaN values with zeroes")
 
         output_col = 'features'
         vector_assembler = VectorAssembler(
@@ -32,6 +35,7 @@ class Preprocessor:
         )
 
         assembled_data = vector_assembler.transform(dataset)
+        loguru.logger.info("The dataset was assembled")
 
         return assembled_data
 
@@ -43,5 +47,6 @@ class Preprocessor:
         )
         scaler_model = scaler.fit(assembled_data)
         scaled_data = scaler_model.transform(assembled_data)
+        loguru.logger.info("The dataset was scaled using StandardScaler")
 
         return scaled_data

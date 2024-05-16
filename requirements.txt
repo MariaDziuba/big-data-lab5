@@ -3,3 +3,4 @@ configparser
 pyspark
 psutil
 numpy
+loguru
